@@ -1,2 +1,6 @@
 # CSPW210
-Semester Project for Programming Workshop
+
+Programming Workshop Project
+
+Swagger: https://app.swaggerhub.com/apis-docs/Saashen/CSPW210/1.0.0/
+GitHub Pages (front-end): https://saashen.github.io/CSPW210-frontend/
