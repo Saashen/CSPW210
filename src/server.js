@@ -1,9 +1,9 @@
 const express = require('express');
 const cors = require('cors');
-const morgan = require('morgan');
+const logger = require('morgan');
 
 const app = express();
-const router = require('./api/router');
+const articlesRouter = require('./routes/articles');
 
 const handleError = (err, req, res, next) => {
   res.status(500).send('Error found: ' + err.message);
@@ -17,9 +17,9 @@ const handleError = (err, req, res, next) => {
 
 const startServer = port => {
   app.use(cors('*'));
+  app.use(logger('dev'));
   app.use(express.json());
-  app.use(morgan('dev'));
-  app.use('/api', router);
+  app.use('/api', articlesRouter);
   app.use(handleError);
 
   app.listen(port);

@@ -1,1 +1,0 @@
-const getArticles = (req, res, next) => {}
