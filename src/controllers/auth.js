@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const getIdFromHeader = require('../helpers/getIdFromHeader');
 const { users } = require('../db/models');
 require('dotenv').config();
 
@@ -58,9 +59,9 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {
   try {
-    const user = await users.findById(req.app.locals.user);
+    const user = await users.findUserById(getIdFromHeader(req));
     await user.updateOne({ token: null });
-    res.status(204).send();
+    return res.status(204).send();
   } catch (err) {
     next(err);
   }
