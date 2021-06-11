@@ -12,13 +12,14 @@ const {
 const {
   validateCreateArticle,
   validateUpdateArticle,
-} = require('../validation/article');
+} = require('../validation/articleValidation');
+const { isAuth } = require('../validation/tokenValidation');
 
 router
   .get('/articles', getArticles)
   .get('/articles/:articleId', getArticleById)
-  .post('/articles', validateCreateArticle, addArticle)
-  .patch('/articles/:articleId', validateUpdateArticle, updateArticle)
-  .delete('/articles/:articleId', removeArticle);
+  .post('/articles', isAuth, validateCreateArticle, addArticle)
+  .patch('/articles/:articleId', isAuth, validateUpdateArticle, updateArticle)
+  .delete('/articles/:articleId', isAuth, removeArticle);
 
 module.exports = router;

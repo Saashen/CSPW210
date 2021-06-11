@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// const mongoosePaginate = require('mongoose-paginate-v2');
+const mongoosePaginate = require('mongoose-paginate-v2');
 const Schema = mongoose.Schema;
 
 const ArticleSchema = new Schema(
@@ -15,7 +15,8 @@ const ArticleSchema = new Schema(
       type: String,
     },
     author: {
-      type: String,
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'User',
     },
     date: {
       type: Date,
@@ -30,7 +31,7 @@ const ArticleSchema = new Schema(
   { versionKey: false, timestamps: true },
 );
 
-// ArticleSchema.plugin(mongoosePaginate);
-const articleModel = mongoose.model('Article', ArticleSchema);
+ArticleSchema.plugin(mongoosePaginate);
+const Article = mongoose.model('Article', ArticleSchema);
 
-module.exports = articleModel;
+module.exports = Article;
