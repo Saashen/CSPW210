@@ -1,6 +1,5 @@
 const getIdFromHeader = require('../helpers/getIdFromHeader');
-
-// const { DEFAULT_PAGE, DEFAULT_LIMIT } = require('../helpers/constants');
+const { DEFAULT_PAGE, DEFAULT_LIMIT } = require('../helpers/constants');
 const {
   getAllArticles,
   getOneArticle,
@@ -8,14 +7,17 @@ const {
   updateArticleById,
   removeArticleById,
 } = require('../db/models/articles');
+const { handleQueryError } = require('../helpers/handleError');
 
 const getArticles = async (req, res, next) => {
-  // const { page = DEFAULT_PAGE, limit = DEFAULT_LIMIT } = req.query;
+  const { page = DEFAULT_PAGE, limit = DEFAULT_LIMIT } = req.query;
 
   try {
-    // const articles = await getAllArticles({ page, limit });
-    const articles = await getAllArticles();
-    res.status(200).send(articles);
+    const result = await getAllArticles({
+      page,
+      limit,
+    });
+    res.status(200).send({ ...result });
   } catch (err) {
     next(err);
   }
@@ -29,6 +31,9 @@ const getArticleById = async (req, res, next) => {
       ? res.status(200).send(article)
       : res.status(404).send({ message: 'Not found' });
   } catch (error) {
+    if (error.name === 'CastError') {
+      return handleQueryError(error, req, res, next);
+    }
     next(error);
   }
 };
@@ -50,6 +55,9 @@ const updateArticle = async (req, res, next) => {
       ? res.status(200).send(article)
       : res.status(404).send({ message: 'Not found' });
   } catch (error) {
+    if (error.name === 'CastError') {
+      return handleQueryError(error, req, res, next);
+    }
     next(error);
   }
 };
@@ -62,6 +70,9 @@ const removeArticle = async (req, res, next) => {
       ? res.status(200).send({ message: 'Article is deleted' })
       : res.status(404).send({ message: 'Not found' });
   } catch (error) {
+    if (error.name === 'CastError') {
+      return handleQueryError(error, req, res, next);
+    }
     next(error);
   }
 };

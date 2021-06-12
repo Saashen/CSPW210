@@ -1,24 +1,30 @@
 const Articles = require('../schema/article');
 
-const getAllArticles = () =>
-  Articles.find().populate({
-    path: 'author',
-    select: 'name email -_id',
+// const getAllArticles = () =>
+//   Articles.find().populate({
+//     path: 'author',
+//     select: 'name -_id',
+//   });
+
+const getAllArticles = ({ page, limit }) => {
+  const options = {
+    page,
+    limit,
+    populate: { path: 'author', select: 'name -_id' },
+    collation: {
+      locale: 'en',
+    },
+  };
+
+  return Articles.paginate({}, options, (err, result) => {
+    if (err) {
+      return err;
+    }
+    // const { docs, totalDocs } = result;
+    // return { docs, totalDocs };
+    return result;
   });
-
-// const getAllArticles = ({ page, limit }) => {
-//   const options = {
-//     page,
-//     limit,
-//     collation: {
-//       locale: 'en',
-//     },
-//   };
-
-//   return Articles.paginate({}, options, (err, result) =>
-//     err ? err : result.docs,
-//   );
-// };
+};
 
 const getOneArticle = id => Articles.findOne({ _id: id });
 

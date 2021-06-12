@@ -5,10 +5,7 @@ const logger = require('morgan');
 const app = express();
 const articlesRouter = require('./routes/articles');
 const authRouter = require('./routes/auth');
-
-const handleError = (err, req, res, next) => {
-  res.status(500).send('Error found: ' + err.stack);
-};
+const { handleError } = require('./helpers/handleError');
 
 // ** Add to cors later **
 // const corsOptions = {

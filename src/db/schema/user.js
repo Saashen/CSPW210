@@ -13,7 +13,10 @@ const UserSchema = new Schema(
       type: String,
       required: [true, 'Please enter your email'],
       unique: true,
-      validate: () => this.email && this.email.includes('@'),
+      validate(value) {
+        const regexp = /\S+@\S+\.\S+/;
+        return regexp.test(String(value).toLowerCase());
+      },
     },
     hash: {
       type: String,
@@ -22,7 +25,7 @@ const UserSchema = new Schema(
     token: {
       type: String,
     },
-  },  
+  },
   { versionKey: false, timestamps: true },
 );
 
