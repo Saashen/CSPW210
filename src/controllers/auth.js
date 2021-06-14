@@ -1,8 +1,9 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 const getIdFromHeader = require('../helpers/getIdFromHeader');
 const { users } = require('../db/models');
 const { handleValidationError } = require('../helpers/handleError');
-require('dotenv').config();
 
 const registration = async (req, res, next) => {
   const { name, email, password } = req.body;

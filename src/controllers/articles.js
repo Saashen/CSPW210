@@ -1,3 +1,5 @@
+const fs = require('fs/promises');
+
 const getIdFromHeader = require('../helpers/getIdFromHeader');
 const { DEFAULT_PAGE, DEFAULT_LIMIT } = require('../helpers/constants');
 const {
@@ -8,6 +10,7 @@ const {
   removeArticleById,
 } = require('../db/models/articles');
 const { handleQueryError } = require('../helpers/handleError');
+const { resizeImage, uploadCloud } = require('../helpers/images');
 
 const getArticles = async (req, res, next) => {
   const { page = DEFAULT_PAGE, limit = DEFAULT_LIMIT } = req.query;
@@ -39,8 +42,23 @@ const getArticleById = async (req, res, next) => {
 };
 
 const addArticle = async (req, res, next) => {
+  let imageURL;
   try {
-    const article = await createArticle(req.body, getIdFromHeader(req));
+    if (req.file) {
+      const pathFile = req.file.path;
+
+      await resizeImage(pathFile);
+      const result = await uploadCloud(pathFile);
+      imageURL = result.url;
+      await fs.unlink(pathFile);
+    }
+
+    const article = await createArticle(
+      req.body,
+      getIdFromHeader(req),
+      imageURL,
+    );
+
     res.status(201).send(article);
   } catch (error) {
     next(error);
