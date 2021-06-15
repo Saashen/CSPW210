@@ -4,7 +4,6 @@ const validateCreateArticle = (req, res, next) => {
   const createArticleRules = Joi.object({
     title: Joi.string().required(),
     text: Joi.string(),
-    image: Joi.string(),
   });
 
   const result = createArticleRules.validate(req.body);

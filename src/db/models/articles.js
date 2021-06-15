@@ -13,13 +13,27 @@ const getAllArticles = ({ page, limit }) => {
   return Articles.paginate({}, options, (err, result) => (err ? err : result));
 };
 
-const getOneArticle = id => Articles.findOne({ _id: id });
+const getOneArticle = id =>
+  Articles.findOne({ _id: id }).populate({
+    path: 'author',
+    select: 'name -_id',
+  });
 
 const createArticle = (article, id, imageURL) =>
-  Articles.create({ ...article, author: id, image: imageURL });
+  Articles.create({ ...article, author: id, image: imageURL }).populate({
+    path: 'author',
+    select: 'name -_id',
+  });
 
 const updateArticleById = (id, article) =>
-  Articles.findByIdAndUpdate({ _id: id }, { ...article }, { new: true });
+  Articles.findByIdAndUpdate(
+    { _id: id },
+    { ...article },
+    { new: true },
+  ).populate({
+    path: 'author',
+    select: 'name -_id',
+  });
 
 const removeArticleById = id => Articles.findByIdAndRemove({ _id: id });
 

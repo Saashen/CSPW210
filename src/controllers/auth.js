@@ -13,7 +13,7 @@ const registration = async (req, res, next) => {
 
     if (user) {
       return res.status(409).send({
-        message: 'Email is in use',
+        message: 'Email in use',
       });
     }
 
