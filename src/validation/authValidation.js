@@ -11,7 +11,7 @@ const validateRegistrateUser = (req, res, next) => {
   if (result.error) {
     return res.status(400).send({
       body: req.body,
-      message: `missing required ${result.error.details[0].context.key} field`,
+      message: `Missing required ${result.error.details[0].context.key} field`,
     });
   }
 
@@ -28,7 +28,7 @@ const validateLoginUser = (req, res, next) => {
   if (result.error) {
     return res.status(400).send({
       body: req.body,
-      message: `missing required ${result.error.details[0].context.key} field`,
+      message: `Missing required ${result.error.details[0].context.key} field`,
     });
   }
 

@@ -32,7 +32,7 @@ const getArticleById = async (req, res, next) => {
     const article = await getOneArticle(articleId);
     article
       ? res.status(200).send(article)
-      : res.status(404).send({ message: 'Not found' });
+      : res.status(404).send({ message: 'We did not find this article' });
   } catch (error) {
     if (error.name === 'CastError') {
       return handleQueryError(error, req, res, next);
@@ -71,7 +71,7 @@ const updateArticle = async (req, res, next) => {
     const article = await updateArticleById(articleId, req.body);
     article
       ? res.status(200).send(article)
-      : res.status(404).send({ message: 'Not found' });
+      : res.status(404).send({ message: 'We did not find this article' });
   } catch (error) {
     if (error.name === 'CastError') {
       return handleQueryError(error, req, res, next);
@@ -86,7 +86,7 @@ const removeArticle = async (req, res, next) => {
     const article = await removeArticleById(articleId);
     article
       ? res.status(200).send({ message: 'Article is deleted' })
-      : res.status(404).send({ message: 'Not found' });
+      : res.status(404).send({ message: 'We did not find this article' });
   } catch (error) {
     if (error.name === 'CastError') {
       return handleQueryError(error, req, res, next);

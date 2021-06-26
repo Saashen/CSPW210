@@ -13,13 +13,14 @@ const registration = async (req, res, next) => {
 
     if (user) {
       return res.status(409).send({
-        message: 'Email in use',
+        message: 'User with such email already exists',
       });
     }
 
     const newUser = await users.createUser({ name, email, hash: password });
 
     return res.status(201).send({
+      message: 'User successfully created',
       user: {
         id: newUser.id,
         name: newUser.name,
@@ -40,7 +41,7 @@ const login = async (req, res, next) => {
     const user = await users.findByEmail(email);
 
     if (!user || !user.validPassword(password)) {
-      res.status(401).send({ message: 'Invalid credentials.' });
+      res.status(401).send({ message: 'Wrong email or password' });
     }
 
     const payload = { id: user.id };
