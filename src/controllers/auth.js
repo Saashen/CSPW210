@@ -41,7 +41,7 @@ const login = async (req, res, next) => {
     const user = await users.findByEmail(email);
 
     if (!user || !user.validPassword(password)) {
-      res.status(401).send({ message: 'Wrong email or password' });
+      return res.status(401).send({ message: 'Wrong email or password' });
     }
 
     const payload = { id: user.id };
