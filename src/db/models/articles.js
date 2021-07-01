@@ -20,10 +20,7 @@ const getOneArticle = id =>
   });
 
 const createArticle = (article, id, imageURL) =>
-  Articles.create({ ...article, author: id, image: imageURL }).populate({
-    path: 'author',
-    select: 'name -_id',
-  });
+  Articles.create({ ...article, author: id, image: imageURL });
 
 const updateArticleById = (id, article) =>
   Articles.findByIdAndUpdate(
