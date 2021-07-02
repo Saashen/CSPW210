@@ -15,7 +15,7 @@ const { handleError } = require('./helpers/handleError');
 // };
 
 const startServer = port => {
-  app.use(cors('*'));
+  app.use(cors({ origin: false }));
   app.use(logger('dev'));
   app.use(express.json({ limit: '25kb' }));
   app.use(express.static(path.join(__dirname, '..', 'public')));

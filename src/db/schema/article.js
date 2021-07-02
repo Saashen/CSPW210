@@ -6,13 +6,14 @@ const ArticleSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: [true, 'Article title is required'],
     },
     text: {
       type: String,
     },
     image: {
-      type: String,
+      type: String, 
+      required: [true, 'Article image is required'],
     },
     author: {
       type: mongoose.SchemaTypes.ObjectId,
