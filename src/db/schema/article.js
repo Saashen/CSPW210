@@ -12,17 +12,12 @@ const ArticleSchema = new Schema(
       type: String,
     },
     image: {
-      type: String, 
+      type: String,
       required: [true, 'Article image is required'],
     },
     author: {
       type: mongoose.SchemaTypes.ObjectId,
       ref: 'User',
-    },
-    date: {
-      type: Date,
-      default: () => Date.now(),
-      required: true,
     },
     comments: [{ body: String, date: Date }],
     meta: {

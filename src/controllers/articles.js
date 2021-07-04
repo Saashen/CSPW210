@@ -20,11 +20,8 @@ const getArticles = async (req, res, next) => {
       page,
       limit,
     });
-
-    res
-      .status(200)
-      .setHeader('Cache-Control', 'no-cache')
-      .send({ ...result });
+    
+    res.status(200).send({ ...result });
   } catch (err) {
     next(err);
   }
