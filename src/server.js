@@ -8,12 +8,6 @@ const articlesRouter = require('./routes/articles');
 const authRouter = require('./routes/auth');
 const { handleError } = require('./helpers/handleError');
 
-// ** Add to cors later **
-// const corsOptions = {
-//   origin: 'https://saashen.github.io/CSPW210-frontend/',
-//   optionsSuccessStatus: 200,
-// };
-
 const startServer = port => {
   app.use(cors());
   app.use(logger('dev'));
