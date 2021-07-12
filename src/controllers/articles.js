@@ -20,7 +20,7 @@ const getArticles = async (req, res, next) => {
       page,
       limit,
     });
-    
+    console.log(result);
     res.status(200).send({ ...result });
   } catch (err) {
     next(err);

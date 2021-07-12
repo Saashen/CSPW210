@@ -4,7 +4,7 @@ const getAllArticles = ({ page, limit }) => {
   const options = {
     page,
     limit,
-    sort: { date: -1 },
+    sort: { createdAt: -1 },
     populate: { path: 'author', select: 'name -_id' },
     collation: {
       locale: 'en',
